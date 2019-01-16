@@ -12,3 +12,25 @@
   margin: 0;
   text-transform: uppercase;
 }
+
+.controls-wrapper {
+  padding: 20px;
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+.controls-wrapper__label {
+  padding-right: 5px;
+}
+
+.controls-wrapper__select {
+  margin: 0 8px;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  color: #555;
+  outline: none;
+}
+
+.controls-wrapper__select:focus {
+  box-shadow: 0 0 0 1px #2E8BF6;
+}
