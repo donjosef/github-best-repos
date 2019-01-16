@@ -5,7 +5,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        APP
+        <header className='header'>
+          <h1 className='header__title'>Most popular github repos</h1>
+        </header>
       </div>
     );
   }
