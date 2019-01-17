@@ -9,7 +9,7 @@ const Select = (props) => {
     if (label) {
         return (
             <label className='controls-wrapper__label'>
-                {label}
+                <span>{label}</span>
                 <select className={className} value={value} onChange={onSelect}>
                     {options}
                 </select>

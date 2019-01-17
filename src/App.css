@@ -100,3 +100,15 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .controls-wrapper__label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .controls-wrapper__label span {
+    width: 60px;
+    display: inline-block;
+  }
+}
