@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Select from './components/Select/Select';
 import Hits from './components/Hits/Hits';
+import Paginate from 'react-paginate';
 
 import { getRepos } from './api/api';
 import './App.css';
@@ -10,14 +11,18 @@ class App extends Component {
   state = {
     hits: [],
     language: 'javascript',
-    date: '2011-01-01'
+    date: '2011-01-01',
+    pageCount: 0
   }
 
   componentDidMount = () => {
     const { language, date } = this.state;
     getRepos(language, date)
       .then(data => {
-        this.setState({ hits: data.hits })
+        this.setState({
+          hits: data.hits,
+          pageCount: data.pageCount
+        });
       })
       .catch(err => console.log(err))
 
@@ -41,8 +46,11 @@ class App extends Component {
             optValues={['all', 'last 1 year', 'last 5 years']} />
         </div>
 
-        <Hits hits={this.state.hits}/>
-
+        <Hits hits={this.state.hits} />
+        <Paginate 
+          pageCount={this.state.pageCount}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}/>
       </div>
     );
   }
