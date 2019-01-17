@@ -93,6 +93,37 @@
   min-width: 70px;
 }
 
+/*--- PAGINATE ----*/
+.paginate-wrapper {
+  list-style: none;
+  width: 550px;
+  max-width: 100%;
+  padding: 0 15px;
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.paginate-li {
+  width: 45px;
+  font-size: 1.2rem;
+  color: #24292E;
+  font-weight: bold;
+}
+
+.paginate-link {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+}
+
+.active-link {
+  border: 1px solid #aaa;
+  color: #4285F4;
+}
+
 
 /*----MEDIA QUERIES ----*/
 @media screen and (max-width: 1104px) {
