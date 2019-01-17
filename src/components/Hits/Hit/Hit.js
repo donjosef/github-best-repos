@@ -7,7 +7,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 library.add(faStar)
 
 const Hit = (props) => {
-    const { name, url, avatar, stars, language,  } = props;
+    const { name, url, avatar, stars, language, description, creationDate, updateDate, type } = props;
     return (
         <li className='hit'>
             <div className='hit__header'>
@@ -22,6 +22,13 @@ const Hit = (props) => {
                     <FontAwesomeIcon icon="star" size='xs' color='#FBBC05' />
                     <p>{stars}</p>
                 </div>
+            </div>
+
+            <div className='hit__body'>
+            <h3>{type}</h3>
+                <p>{description}</p>
+                <p>Created at: {creationDate.substr(0, 10)}</p>
+                <p>Last update: {updateDate.substr(0, 10)}</p>            
             </div>
         </li>
     )
