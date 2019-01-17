@@ -39,8 +39,8 @@
 /*--- LIST/HITS ----*/
 .hits {
   list-style: none;
-  padding: 0;
-  margin: 20px;
+  margin: 0;
+  padding: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
@@ -56,6 +56,7 @@
 .hit__header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .hit__avatar {
@@ -72,6 +73,7 @@
   margin: 0;
   flex-grow: 1;
   text-align: left;
+  margin-right: 20px;
 }
 
 .hit__title a {
@@ -89,4 +91,12 @@
   justify-content: space-around;
   align-items: center;
   min-width: 70px;
+}
+
+
+/*----MEDIA QUERIES ----*/
+@media screen and (max-width: 1104px) {
+  .hits {
+    grid-template-columns: 1fr;
+  }
 }
