@@ -13,7 +13,10 @@ const Hits = (props) => {
                     avatar={hit.owner.avatar_url}
                     stars={hit.stargazers_count}
                     language={hit.language}
-                     />
+                    description={hit.description}
+                    creationDate={hit.created_at}
+                    updateDate={hit.updated_at}
+                    type={hit.owner.type} />
             ))}
         </ul>
     );
