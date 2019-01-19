@@ -75,6 +75,17 @@ class Hits extends React.Component {
 
     render() {
         const { hits } = this.state;
+
+        /*Retrieve currentPage from pathaname not from state, because on reload the state is reset*/
+        const pathname = this.props.location.pathname;
+        const regex = /\d+/;
+        let currentPage;
+        if (pathname === '/') {
+            currentPage = 1;
+        } else {
+            currentPage = parseInt(pathname.match(regex)[0], 10);
+        }
+
         return (
             <div>
                 <ul className='hits'>
@@ -97,7 +108,9 @@ class Hits extends React.Component {
                     pageCount={this.state.pageCount}
                     pageRangeDisplayed={3}
                     marginPagesDisplayed={2}
+                    initialPage={currentPage - 1}
                     onPageChange={this.changePageHandler}
+                    disableInitialCallback
                     containerClassName='paginate-wrapper'
                     pageLinkClassName='paginate-link'
                     pageClassName='paginate-li'
