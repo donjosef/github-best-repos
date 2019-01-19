@@ -15,7 +15,6 @@ class Hits extends React.Component {
 
     state = {
         hits: [],
-        currentPage: 1,
         pageCount: 0
     }
 
