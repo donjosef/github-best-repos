@@ -67,8 +67,8 @@ class Hits extends React.Component {
                 .catch(err => console.log(err))
         }
 
-        if(prevProps.language !== this.props.language) {
-            const {language, date } = this.props;
+        if (prevProps.language !== this.props.language) {
+            const { language, date } = this.props;
             const regEx = /\d+/;
             const currentPage = this.props.location.pathname.match(regEx)[0];
 
@@ -98,25 +98,32 @@ class Hits extends React.Component {
             currentPage = parseInt(pathname.match(regex)[0], 10);
         }
 
-        if(hits.length > 0) {
+        if (hits.length > 0) {
             return (
                 <div>
                     <ul className='hits'>
-                        {hits.map(hit => (
-                            <Hit
-                                key={hit.id}
-                                name={hit.name}
-                                url={hit.html_url}
-                                avatar={hit.owner.avatar_url}
-                                stars={hit.stargazers_count}
-                                language={hit.language}
-                                description={hit.description}
-                                creationDate={hit.created_at}
-                                updateDate={hit.updated_at}
-                                type={hit.owner.type} />
-                        ))}
+                        {hits.map(hit => {
+                            /*Remove dummy repo named eeeeee from the results*/
+                            if (hit.name.includes('eeeeeee')) {
+                                return null;
+                            } else {
+                                return (
+                                    <Hit
+                                        key={hit.id}
+                                        name={hit.name}
+                                        url={hit.html_url}
+                                        avatar={hit.owner.avatar_url}
+                                        stars={hit.stargazers_count}
+                                        language={hit.language}
+                                        description={hit.description}
+                                        creationDate={hit.created_at}
+                                        updateDate={hit.updated_at}
+                                        type={hit.owner.type} />
+                                );
+                            }
+                        })}
                     </ul>
-    
+
                     <Paginate
                         pageCount={this.state.pageCount}
                         pageRangeDisplayed={3}
@@ -137,7 +144,7 @@ class Hits extends React.Component {
             );
         } else {
             return <Spinner />
-        } 
+        }
     }
 }
 
