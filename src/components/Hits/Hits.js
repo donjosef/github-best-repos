@@ -20,15 +20,31 @@ class Hits extends React.Component {
     }
 
     componentDidMount = () => {
+        const pathname = this.props.location.pathname;
         const { language, date } = this.props;
-        getRepos(language, date)
-            .then(data => {
-                this.setState({
-                    hits: data.hits,
-                    pageCount: data.pageCount
-                });
-            })
-            .catch(err => console.log(err))
+
+        /* Get repos based on current path */
+        if (pathname === '/' || pathname === '/page1') {
+            getRepos(language, date)
+                .then(data => {
+                    this.setState({
+                        hits: data.hits,
+                        pageCount: data.pageCount
+                    });
+                })
+                .catch(err => console.log(err))
+        } else {
+            const regEx = /\d+/;
+            const currentPage = pathname.match(regEx)[0];
+            getRepos(language, date, currentPage)
+                .then(data => {
+                    this.setState({
+                        hits: data.hits,
+                        pageCount: data.pageCount
+                    });
+                })
+                .catch(err => console.log(err))
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -38,12 +54,12 @@ class Hits extends React.Component {
             const regEx = /\d+/;
             const { language, date } = this.props;
 
-            if(this.props.location.pathname === '/') {
+            if (this.props.location.pathname === '/') {
                 page = 1;
             } else {
                 page = this.props.location.pathname.match(regEx)[0]; //extract the number of current page from pathname
             }
-            
+
             getRepos(language, date, page)
                 .then(data => {
                     this.setState({ hits: data.hits });
