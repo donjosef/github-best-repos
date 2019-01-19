@@ -1,5 +1,6 @@
 import React from 'react';
 import Hit from './Hit/Hit';
+import Spinner from '../Spinner/Spinner';
 import Paginate from 'react-paginate';
 
 import { getRepos } from '../../api/api';
@@ -85,42 +86,46 @@ class Hits extends React.Component {
             currentPage = parseInt(pathname.match(regex)[0], 10);
         }
 
-        return (
-            <div>
-                <ul className='hits'>
-                    {hits.map(hit => (
-                        <Hit
-                            key={hit.id}
-                            name={hit.name}
-                            url={hit.html_url}
-                            avatar={hit.owner.avatar_url}
-                            stars={hit.stargazers_count}
-                            language={hit.language}
-                            description={hit.description}
-                            creationDate={hit.created_at}
-                            updateDate={hit.updated_at}
-                            type={hit.owner.type} />
-                    ))}
-                </ul>
-
-                <Paginate
-                    pageCount={this.state.pageCount}
-                    pageRangeDisplayed={3}
-                    marginPagesDisplayed={2}
-                    initialPage={currentPage - 1}
-                    onPageChange={this.changePageHandler}
-                    disableInitialCallback
-                    containerClassName='paginate-wrapper'
-                    pageLinkClassName='paginate-link'
-                    pageClassName='paginate-li'
-                    previousClassName='paginate-li'
-                    nextClassName='paginate-li'
-                    previousLabel={<FontAwesomeIcon icon='chevron-left' />}
-                    nextLabel={<FontAwesomeIcon icon='chevron-right' />}
-                    activeClassName='active-link'
-                />
-            </div>
-        );
+        if(hits.length > 0) {
+            return (
+                <div>
+                    <ul className='hits'>
+                        {hits.map(hit => (
+                            <Hit
+                                key={hit.id}
+                                name={hit.name}
+                                url={hit.html_url}
+                                avatar={hit.owner.avatar_url}
+                                stars={hit.stargazers_count}
+                                language={hit.language}
+                                description={hit.description}
+                                creationDate={hit.created_at}
+                                updateDate={hit.updated_at}
+                                type={hit.owner.type} />
+                        ))}
+                    </ul>
+    
+                    <Paginate
+                        pageCount={this.state.pageCount}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={2}
+                        initialPage={currentPage - 1}
+                        onPageChange={this.changePageHandler}
+                        disableInitialCallback
+                        containerClassName='paginate-wrapper'
+                        pageLinkClassName='paginate-link'
+                        pageClassName='paginate-li'
+                        previousClassName='paginate-li'
+                        nextClassName='paginate-li'
+                        previousLabel={<FontAwesomeIcon icon='chevron-left' />}
+                        nextLabel={<FontAwesomeIcon icon='chevron-right' />}
+                        activeClassName='active-link'
+                    />
+                </div>
+            );
+        } else {
+            return <Spinner />
+        } 
     }
 }
 
