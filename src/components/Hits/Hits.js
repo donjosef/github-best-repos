@@ -109,7 +109,7 @@ class Hits extends React.Component {
                         pageCount={this.state.pageCount}
                         pageRangeDisplayed={3}
                         marginPagesDisplayed={2}
-                        initialPage={currentPage - 1}
+                        forcePage={currentPage - 1}
                         onPageChange={this.changePageHandler}
                         disableInitialCallback
                         containerClassName='paginate-wrapper'
