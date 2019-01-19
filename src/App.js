@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Select from './components/Select/Select';
 import Hits from './components/Hits/Hits';
 
+import { getDateOfPastYears } from './utilities/utilities';
+
 import { Route } from 'react-router-dom';
 
 import './App.css';
@@ -11,10 +13,35 @@ class App extends Component {
   state = {
     language: 'javascript',
     date: '2011-01-01',
+    dateSelectValue: 'all'
   }
 
   changeLanguageHandler = (e) => {
     this.setState({ language: e.target.value });
+  }
+
+  changeDateHandler = (e) => {
+    this.setState({ dateSelectValue: e.target.value });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.dateSelectValue !== this.state.dateSelectValue) {
+      switch (this.state.dateSelectValue) {
+        case 'all':
+          this.setState({ date: '2011-01-01' });
+          break;
+        case 'last 5 years':
+          this.setState({
+            date: getDateOfPastYears(5)
+          });
+          break;
+        case 'last year':
+          this.setState({
+            date: getDateOfPastYears(1)
+          });
+          break;
+      }
+    }
   }
 
   render() {
@@ -34,7 +61,9 @@ class App extends Component {
           <Select
             className='controls-wrapper__select'
             label='for'
-            optValues={['all', 'last 1 year', 'last 5 years']} />
+            optValues={['all', 'last year', 'last 5 years']}
+            onSelect={this.changeDateHandler}
+            value={this.dateSelectValue} />
         </div>
 
         <Route path='/' render={(props) => (
