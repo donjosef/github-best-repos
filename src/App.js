@@ -1,39 +1,16 @@
 import React, { Component } from 'react';
 import Select from './components/Select/Select';
 import Hits from './components/Hits/Hits';
-import Paginate from 'react-paginate';
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { Route } from 'react-router-dom';
 
-import { getRepos } from './api/api';
 import './App.css';
-
-library.add(faChevronLeft, faChevronRight);
-
 
 class App extends Component {
 
   state = {
-    hits: [],
     language: 'javascript',
     date: '2011-01-01',
-    pageCount: 0
-  }
-
-  componentDidMount = () => {
-    const { language, date } = this.state;
-    getRepos(language, date)
-      .then(data => {
-        this.setState({
-          hits: data.hits,
-          pageCount: data.pageCount
-        });
-      })
-      .catch(err => console.log(err))
-
   }
 
   render() {
@@ -54,20 +31,10 @@ class App extends Component {
             optValues={['all', 'last 1 year', 'last 5 years']} />
         </div>
 
-        <Hits hits={this.state.hits} />
-        <Paginate 
-          pageCount={this.state.pageCount}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          containerClassName='paginate-wrapper'
-          pageLinkClassName='paginate-link'
-          pageClassName='paginate-li'
-          previousClassName='paginate-li'
-          nextClassName='paginate-li'
-          previousLabel={<FontAwesomeIcon icon='chevron-left' />}
-          nextLabel={<FontAwesomeIcon icon='chevron-right'/>}
-          activeClassName='active-link'
-          />
+        <Route path='/' render={(props) => (
+          <Hits language={this.state.language} date={this.state.date} {...props} />
+        )} />
+
       </div>
     );
   }
