@@ -66,6 +66,18 @@ class Hits extends React.Component {
                 })
                 .catch(err => console.log(err))
         }
+
+        if(prevProps.language !== this.props.language) {
+            const {language, date } = this.props;
+            const regEx = /\d+/;
+            const currentPage = this.props.location.pathname.match(regEx)[0];
+
+            getRepos(language, date, currentPage)
+                .then(data => {
+                    this.setState({ hits: data.hits });
+                })
+                .catch(err => console.log(err))
+        }
     }
 
     changePageHandler = (data) => {
