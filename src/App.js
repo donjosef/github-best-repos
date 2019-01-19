@@ -13,6 +13,10 @@ class App extends Component {
     date: '2011-01-01',
   }
 
+  changeLanguageHandler = (e) => {
+    this.setState({ language: e.target.value });
+  }
+
   render() {
     return (
       <div className="App">
@@ -24,7 +28,9 @@ class App extends Component {
           <Select
             className='controls-wrapper__select'
             label='Search'
-            optValues={['all', 'javascript', 'java', 'python', 'ruby']} />
+            optValues={['all', 'javascript', 'java', 'python', 'ruby']}
+            onSelect={this.changeLanguageHandler}
+            value={this.state.language} />
           <Select
             className='controls-wrapper__select'
             label='for'
