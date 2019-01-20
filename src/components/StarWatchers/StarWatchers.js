@@ -15,14 +15,18 @@ library.add(faChevronLeft, faChevronRight);
 
 class StarWatchers extends Component {
     state = {
-        watchers: []
+        watchers: [],
+        pageCount: 0
     }
 
     componentDidMount() {
         const { owner, repo } = this.props.match.params;
         getWatchers(owner, repo)
             .then(data => {
-                this.setState({ watchers: data.watchers })
+                this.setState({ 
+                    watchers: data.watchers,
+                    pageCount: data.pageCount
+                 });
             })
     }
     render() {
