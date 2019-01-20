@@ -11,8 +11,8 @@ export async function getRepos(language, date, page = 1) {
     }
 }
 
-export async function getWatchers(owner, repo) {
-    const res = await axios.get(`https://api.github.com/repos/${owner}/${repo}/stargazers`);
+export async function getWatchers(owner, repo, page = 1) {
+    const res = await axios.get(`https://api.github.com/repos/${owner}/${repo}/stargazers?page=${page}`);
     const pageCount = parseInt(parseLink(res.headers.link).last.page, 10);
 
     return {
