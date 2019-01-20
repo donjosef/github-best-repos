@@ -68,7 +68,7 @@ class App extends Component {
         </div>
 
         <Switch>
-          <Route path='/:repo/starwatchers' component={StarWatchers} />
+          <Route path='/:owner/:repo/starwatchers' component={StarWatchers} />
           <Route path='/' render={(props) => (
             <Hits language={this.state.language} date={this.state.date} {...props} />
           )} />
