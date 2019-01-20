@@ -134,6 +134,7 @@ class Hits extends React.Component {
                                 return (
                                     <Hit
                                         key={hit.id}
+                                        owner={hit.owner.login}
                                         name={hit.name}
                                         url={hit.html_url}
                                         avatar={hit.owner.avatar_url}
