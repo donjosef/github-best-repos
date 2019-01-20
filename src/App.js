@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Select from './components/Select/Select';
 import Hits from './components/Hits/Hits';
+import StarWatchers from './components/StarWatchers/StarWatchers';
 
 import { getDateOfPastYears } from './utilities/utilities';
 
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
@@ -66,10 +67,12 @@ class App extends Component {
             value={this.dateSelectValue} />
         </div>
 
-        <Route path='/' render={(props) => (
-          <Hits language={this.state.language} date={this.state.date} {...props} />
-        )} />
-
+        <Switch>
+          <Route path='/:repo/starwatchers' component={StarWatchers} />
+          <Route path='/' render={(props) => (
+            <Hits language={this.state.language} date={this.state.date} {...props} />
+          )} />
+        </Switch>
       </div>
     );
   }
