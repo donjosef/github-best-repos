@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+
+import { Link } from 'react-router-dom';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -18,10 +20,10 @@ const Hit = (props) => {
                 <div className='hit__language'>
                     <p>{language}</p>
                 </div>
-                <div className='hit__stars'>
+                <Link className='hit__stars' to={'/' + name + '/starwatchers'}>
                     <FontAwesomeIcon icon="star" size='xs' color='#FBBC05' />
                     <p>{stars}</p>
-                </div>
+                </Link>
             </div>
 
             <div className='hit__body'>
