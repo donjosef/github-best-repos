@@ -9,5 +9,12 @@ export async function getRepos(language, date, page = 1) {
         hits: res.data.items,
         pageCount
     }
+}
 
+export async function getWatchers(owner, repo) {
+    const res = await axios.get(`https://api.github.com/repos/${owner}/${repo}/stargazers`);
+
+    return {
+        watchers: res.data
+    }
 }
