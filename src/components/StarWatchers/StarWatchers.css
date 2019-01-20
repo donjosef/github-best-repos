@@ -12,3 +12,12 @@
     border-bottom: 1px solid #d1d1d1;
     text-align: left;
 }
+
+.watcher__avatar {
+    width: 60px;
+    height: 60px;
+}
+
+.watcher__avatar img {
+    width: 100%;
+}
