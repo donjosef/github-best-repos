@@ -93,6 +93,12 @@
   justify-content: space-around;
   align-items: center;
   min-width: 70px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.hit__stars:hover {
+  text-decoration: underline;
 }
 
 /*--- PAGINATE ----*/
