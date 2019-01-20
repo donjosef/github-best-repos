@@ -23,19 +23,45 @@ class StarWatchers extends Component {
         const { owner, repo } = this.props.match.params;
         getWatchers(owner, repo)
             .then(data => {
-                this.setState({ 
+                this.setState({
                     watchers: data.watchers,
                     pageCount: data.pageCount
-                 });
+                });
             })
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.location.pathname !== this.props.location.pathname) {
+            let page;
+            const regEx = /\d+/;
+            const { owner, repo } = this.props.match.params;
+
+            if (!this.props.location.pathname.match(regEx)) {
+                page = 1;
+            } else {
+                page = this.props.location.pathname.match(regEx)[0]; //extract the number of current page from pathname
+            }
+
+            getWatchers(owner, repo, page)
+                .then(data => {
+                    this.setState({ watchers: data.watchers });
+                })
+
+        }
+    }
+
+    changePageHandler = (data) => {
+        const page = data.selected + 1; //data.selected is 0 based
+        this.props.history.push(this.props.match.url + '/' + page); //will be root/owner/repo/starwatchers/1 or 4 or n
+    }
+
     render() {
         const watchers = this.state.watchers.map(watcher => {
-            return <Watcher 
-                        key={watcher.id} 
-                        avatar={watcher.avatar_url} 
-                        name={watcher.login}
-                        url={watcher.html_url} />
+            return <Watcher
+                key={watcher.id}
+                avatar={watcher.avatar_url}
+                name={watcher.login}
+                url={watcher.html_url} />
         });
 
         return (
@@ -45,19 +71,20 @@ class StarWatchers extends Component {
                 </ul>
 
                 <Paginate
-                        pageCount={this.state.pageCount}
-                        pageRangeDisplayed={3}
-                        marginPagesDisplayed={2}
-                        disableInitialCallback
-                        containerClassName='paginate-wrapper'
-                        pageLinkClassName='paginate-link'
-                        pageClassName='paginate-li'
-                        previousClassName='paginate-li'
-                        nextClassName='paginate-li'
-                        previousLabel={<FontAwesomeIcon icon='chevron-left' />}
-                        nextLabel={<FontAwesomeIcon icon='chevron-right' />}
-                        activeClassName='active-link'
-                    />
+                    pageCount={this.state.pageCount}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    onPageChange={this.changePageHandler}
+                    disableInitialCallback
+                    containerClassName='paginate-wrapper'
+                    pageLinkClassName='paginate-link'
+                    pageClassName='paginate-li'
+                    previousClassName='paginate-li'
+                    nextClassName='paginate-li'
+                    previousLabel={<FontAwesomeIcon icon='chevron-left' />}
+                    nextLabel={<FontAwesomeIcon icon='chevron-right' />}
+                    activeClassName='active-link'
+                />
             </div>
         )
     }
