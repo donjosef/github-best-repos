@@ -1,0 +1,14 @@
+.bar {
+    height: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.bar__filler {
+    transition: width 0.1s ease-in-out;
+    background: #81e1f9;
+    height: 100%;
+}
