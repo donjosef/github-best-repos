@@ -141,6 +141,12 @@
   }
 }
 
+@media screen and (max-width: 583px) {
+  .controls-wrapper {
+    padding-top: 150px;
+  }
+}
+
 @media screen and (max-width: 400px) {
   .controls-wrapper__label {
     display: block;
