@@ -52,7 +52,13 @@ class StarWatchers extends Component {
 
     changePageHandler = (data) => {
         const page = data.selected + 1; //data.selected is 0 based
-        this.props.history.push(this.props.match.url + '/' + page); //will be root/owner/repo/starwatchers/1 or 4 or n
+        /* If last character is forw slash. Avoid a bad formatted url with two // */
+        if(this.props.match.url[this.props.match.url.length - 1] === '/') {
+            console.log(this.props.match.url)
+            this.props.history.push(this.props.match.url + page);
+        } else {
+            this.props.history.push(this.props.match.url + '/' + page); //will be root/owner/repo/starwatchers/1 or 4 or n
+        }
     }
 
     render() {
