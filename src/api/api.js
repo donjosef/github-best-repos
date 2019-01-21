@@ -1,10 +1,20 @@
 import axios from 'axios';
 import parseLink from 'parse-link-header';
 
+function isLastPage(headersLink) {
+    return headersLink.last ? false : true;
+}
+
 export async function getRepos(language, date, page = 1) {
     const res = await axios.get(`https://api.github.com/search/repositories?q=stars:>1+language:${language}+created:>${date}&sort=stars&order=desc&per_page=40&page=${page}`);
-    const pageCount = parseInt(parseLink(res.headers.link).last.page, 10);
     
+    let pageCount;
+    if (isLastPage(parseLink(res.headers.link))) {
+        pageCount = parseInt(parseLink(res.headers.link).prev.page, 10) + 1;
+    } else {
+        pageCount = parseInt(parseLink(res.headers.link).last.page, 10);
+    }
+
     return {
         hits: res.data.items,
         pageCount
