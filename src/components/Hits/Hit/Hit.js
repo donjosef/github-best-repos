@@ -14,7 +14,7 @@ const Hit = (props) => {
         <li className='hit'>
             <div className='hit__header'>
                 <div className='hit__avatar'>
-                    <img src={avatar} />
+                    <img src={avatar} alt={name}/>
                 </div>
                 <h2 className='hit__title'><a href={url}>{name}</a></h2>
                 <div className='hit__language'>
