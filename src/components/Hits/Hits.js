@@ -16,7 +16,8 @@ class Hits extends React.Component {
 
     state = {
         hits: [],
-        pageCount: 0
+        pageCount: 0,
+        error: null
     }
 
     componentDidMount = () => {
@@ -32,7 +33,7 @@ class Hits extends React.Component {
                         pageCount: data.pageCount
                     });
                 })
-                .catch(err => console.log(err))
+                .catch(err => this.setState({error: err.message}))
         } else {
             const regEx = /\d+/;
             const currentPage = pathname.match(regEx)[0];
@@ -43,7 +44,7 @@ class Hits extends React.Component {
                         pageCount: data.pageCount
                     });
                 })
-                .catch(err => console.log(err))
+                .catch(err => this.setState({error: err.message}))
         }
     }
 
@@ -168,7 +169,11 @@ class Hits extends React.Component {
                 </div>
             );
         } else {
-            return <Spinner />
+            if(!this.state.error) {
+                return <Spinner />
+            } else {
+                return <h1>{this.state.error}</h1>
+            }
         }
     }
 }
