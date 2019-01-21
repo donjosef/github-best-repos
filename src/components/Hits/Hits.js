@@ -1,7 +1,7 @@
 import React from 'react';
 import Hit from './Hit/Hit';
-import Spinner from '../Spinner/Spinner';
 import Paginate from 'react-paginate';
+import LoadingBar from '../LoadingBar/LoadingBar';
 
 import { getRepos } from '../../api/api';
 
@@ -17,34 +17,50 @@ class Hits extends React.Component {
     state = {
         hits: [],
         pageCount: 0,
-        error: null
+        loading: false,
+        error: null,
+        percentage: 0
     }
 
     componentDidMount = () => {
         const pathname = this.props.location.pathname;
         const { language, date } = this.props;
 
+        this.setState({ loading: true, percentage: 0 });
+
+        const interval = setInterval(() => {
+            this.setState(prevState => ({
+                percentage: prevState.percentage + 10
+            }));
+        }, 100);
+
         /* Get repos based on current path */
         if (pathname === '/' || pathname === '/page1') {
             getRepos(language, date)
                 .then(data => {
+                    clearInterval(interval);
                     this.setState({
                         hits: data.hits,
-                        pageCount: data.pageCount
+                        pageCount: data.pageCount,
+                        percentage: 100,
+                        loading: false
                     });
                 })
-                .catch(err => this.setState({error: err.message}))
+                .catch(err => this.setState({ error: err.message }))
         } else {
             const regEx = /\d+/;
             const currentPage = pathname.match(regEx)[0];
             getRepos(language, date, currentPage)
                 .then(data => {
+                    clearInterval(interval)
                     this.setState({
                         hits: data.hits,
-                        pageCount: data.pageCount
+                        pageCount: data.pageCount,
+                        percentage: 100,
+                        loading: false
                     });
                 })
-                .catch(err => this.setState({error: err.message}))
+                .catch(err => this.setState({ error: err.message }))
         }
     }
 
@@ -61,9 +77,18 @@ class Hits extends React.Component {
                 page = this.props.location.pathname.match(regEx)[0]; //extract the number of current page from pathname
             }
 
+            this.setState({ loading: true, percentage: 0 });
+
+            const interval = setInterval(() => {
+                this.setState(prevState => ({
+                    percentage: prevState.percentage + 10
+                }));
+            }, 100);
+
             getRepos(language, date, page)
                 .then(data => {
-                    this.setState({ hits: data.hits });
+                    clearInterval(interval);
+                    this.setState({ hits: data.hits, percentage: 100, loading: false });
                 })
                 .catch(err => console.log(err))
         }
@@ -79,9 +104,18 @@ class Hits extends React.Component {
                 currentPage = this.props.location.pathname.match(regEx)[0];
             }
 
+            this.setState({ loading: true, percentage: 0 });
+
+            const interval = setInterval(() => {
+                this.setState(prevState => ({
+                    percentage: prevState.percentage + 10
+                }));
+            }, 100);
+
             getRepos(language, date, currentPage)
                 .then(data => {
-                    this.setState({ hits: data.hits });
+                    clearInterval(interval);
+                    this.setState({ hits: data.hits, loading: false, percentage: 100 });
                 })
                 .catch(err => console.log(err))
         }
@@ -97,9 +131,18 @@ class Hits extends React.Component {
                 currentPage = this.props.location.pathname.match(regEx)[0];
             }
 
+            this.setState({ loading: true, percentage: 0 });
+
+            const interval = setInterval(() => {
+                this.setState(prevState => ({
+                    percentage: prevState.percentage + 10
+                }));
+            }, 100);
+
             getRepos(language, date, currentPage)
                 .then(data => {
-                    this.setState({ hits: data.hits });
+                    clearInterval(interval);
+                    this.setState({ hits: data.hits, loading: false, percentage: 100 });
                 })
                 .catch(err => console.log(err))
         }
@@ -123,7 +166,7 @@ class Hits extends React.Component {
             currentPage = parseInt(pathname.match(regex)[0], 10);
         }
 
-        if (hits.length > 0) {
+        if (!this.state.loading && this.state.percentage >= 100) {
             return (
                 <div>
                     <ul className='hits'>
@@ -169,8 +212,8 @@ class Hits extends React.Component {
                 </div>
             );
         } else {
-            if(!this.state.error) {
-                return <Spinner />
+            if (!this.state.error) {
+                return <LoadingBar percentage={this.state.percentage} />
             } else {
                 return <h1>{this.state.error}</h1>
             }
