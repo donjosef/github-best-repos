@@ -67,14 +67,12 @@ class App extends Component {
             value={this.dateSelectValue} />
         </div>
 
-        <BrowserRouter basename='/github-best-repos'>
-          <Switch>
-            <Route path='/:owner/:repo/starwatchers' component={StarWatchers} />
-            <Route path='/' render={(props) => (
-              <Hits language={this.state.language} date={this.state.date} {...props} />
-            )} />
-          </Switch>
-        </BrowserRouter>
+        <Switch>
+          <Route path='/:owner/:repo/starwatchers' component={StarWatchers} />
+          <Route path='/' render={(props) => (
+            <Hits language={this.state.language} date={this.state.date} {...props} />
+          )} />
+        </Switch>
       </div>
     );
   }
