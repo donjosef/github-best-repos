@@ -16,18 +16,35 @@ library.add(faChevronLeft, faChevronRight);
 class StarWatchers extends Component {
     state = {
         watchers: [],
-        pageCount: 0
+        pageCount: 0,
+        error: null
     }
 
     componentDidMount() {
         const { owner, repo } = this.props.match.params;
-        getWatchers(owner, repo)
-            .then(data => {
-                this.setState({
-                    watchers: data.watchers,
-                    pageCount: data.pageCount
-                });
-            })
+        const pathname = this.props.location.pathname;
+        if (pathname.endsWith('/starwatchers') || pathname.endsWith('/starwatchers/1')) {
+            getWatchers(owner, repo)
+                .then(data => {
+                    this.setState({
+                        watchers: data.watchers,
+                        pageCount: data.pageCount
+                    });
+                })
+                .catch(err => this.setState({ error: err.message }))
+        } else {
+            const regEx = /\d+/;
+            const currentPage = pathname.match(regEx)[0];
+
+            getWatchers(owner, repo, currentPage)
+                .then(data => {
+                    this.setState({
+                        watchers: data.watchers,
+                        pageCount: data.pageCount
+                    });
+                })
+                .catch(err => this.setState({ error: err.message }))
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -53,7 +70,7 @@ class StarWatchers extends Component {
     changePageHandler = (data) => {
         const page = data.selected + 1; //data.selected is 0 based
         /* If last character is forw slash. Avoid a bad formatted url with two // */
-        if(this.props.match.url[this.props.match.url.length - 1] === '/') {
+        if (this.props.match.url[this.props.match.url.length - 1] === '/') {
             console.log(this.props.match.url)
             this.props.history.push(this.props.match.url + page);
         } else {
@@ -70,29 +87,33 @@ class StarWatchers extends Component {
                 url={watcher.html_url} />
         });
 
-        return (
-            <div>
-                <ul className='watchers'>
-                    {watchers}
-                </ul>
+        let output = <div>
+            <ul className='watchers'>
+                {watchers}
+            </ul>
 
-                <Paginate
-                    pageCount={this.state.pageCount}
-                    pageRangeDisplayed={3}
-                    marginPagesDisplayed={2}
-                    onPageChange={this.changePageHandler}
-                    disableInitialCallback
-                    containerClassName='paginate-wrapper'
-                    pageLinkClassName='paginate-link'
-                    pageClassName='paginate-li'
-                    previousClassName='paginate-li'
-                    nextClassName='paginate-li'
-                    previousLabel={<FontAwesomeIcon icon='chevron-left' />}
-                    nextLabel={<FontAwesomeIcon icon='chevron-right' />}
-                    activeClassName='active-link'
-                />
-            </div>
-        )
+            <Paginate
+                pageCount={this.state.pageCount}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={2}
+                onPageChange={this.changePageHandler}
+                disableInitialCallback
+                containerClassName='paginate-wrapper'
+                pageLinkClassName='paginate-link'
+                pageClassName='paginate-li'
+                previousClassName='paginate-li'
+                nextClassName='paginate-li'
+                previousLabel={<FontAwesomeIcon icon='chevron-left' />}
+                nextLabel={<FontAwesomeIcon icon='chevron-right' />}
+                activeClassName='active-link'
+            />
+        </div>
+
+        if(this.state.error) {
+            output = <h1>{this.state.error}</h1>
+        }
+
+        return output;
     }
 }
 
