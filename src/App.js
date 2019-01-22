@@ -5,7 +5,7 @@ import StarWatchers from './components/StarWatchers/StarWatchers';
 
 import { getDateOfPastYears } from './utilities/utilities';
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
