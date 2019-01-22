@@ -5,7 +5,7 @@ const Watcher = (props) => {
     return (
         <li className='watcher'>
             <div className='watcher__avatar'>
-                <img src={avatar} />
+                <img src={avatar} alt={name}/>
             </div>
             <h3><a href={url} >{name}</a></h3>
         </li>
