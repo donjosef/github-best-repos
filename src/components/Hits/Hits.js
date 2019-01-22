@@ -65,8 +65,10 @@ class Hits extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        /*Since the path changed, get repos for the new page*/
-        if (prevProps.location.pathname !== this.props.location.pathname) {
+        /*Since the path or lang or date changed, get repos for the new page*/
+        if (prevProps.location.pathname !== this.props.location.pathname ||
+            prevProps.language !== this.props.language ||
+            prevProps.date !== this.props.date) {
             let page;
             const regEx = /\d+/;
             const { language, date } = this.props;
@@ -89,60 +91,6 @@ class Hits extends React.Component {
                 .then(data => {
                     clearInterval(interval);
                     this.setState({ hits: data.hits, percentage: 100, loading: false });
-                })
-                .catch(err => console.log(err))
-        }
-
-        if (prevProps.language !== this.props.language) {
-            const { language, date } = this.props;
-            let currentPage;
-            const regEx = /\d+/;
-
-            if (this.props.location.pathname === '/') {
-                currentPage = 1;
-            } else {
-                currentPage = this.props.location.pathname.match(regEx)[0];
-            }
-
-            this.setState({ loading: true, percentage: 0 });
-
-            const interval = setInterval(() => {
-                this.setState(prevState => ({
-                    percentage: prevState.percentage + 10
-                }));
-            }, 100);
-
-            getRepos(language, date, currentPage)
-                .then(data => {
-                    clearInterval(interval);
-                    this.setState({ hits: data.hits, loading: false, percentage: 100 });
-                })
-                .catch(err => console.log(err))
-        }
-
-        if (prevProps.date !== this.props.date) {
-            const { language, date } = this.props;
-            let currentPage;
-            const regEx = /\d+/;
-
-            if (this.props.location.pathname === '/') {
-                currentPage = 1;
-            } else {
-                currentPage = this.props.location.pathname.match(regEx)[0];
-            }
-
-            this.setState({ loading: true, percentage: 0 });
-
-            const interval = setInterval(() => {
-                this.setState(prevState => ({
-                    percentage: prevState.percentage + 10
-                }));
-            }, 100);
-
-            getRepos(language, date, currentPage)
-                .then(data => {
-                    clearInterval(interval);
-                    this.setState({ hits: data.hits, loading: false, percentage: 100 });
                 })
                 .catch(err => console.log(err))
         }
