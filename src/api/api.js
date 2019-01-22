@@ -22,7 +22,7 @@ export async function getRepos(language, date, page = 1) {
 }
 
 export async function getWatchers(owner, repo, page = 1) {
-    const res = await axios.get(`https://api.github.com/repos/${owner}/${repo}/stargazers?page=${page}`);
+    const res = await axios.get(`https://api.github.com/repos/${owner}/${repo}/stargazers?per_page=40&page=${page}`);
 
     let pageCount;
     if (isLastPage(parseLink(res.headers.link))) {
@@ -30,7 +30,7 @@ export async function getWatchers(owner, repo, page = 1) {
     } else {
         pageCount = parseInt(parseLink(res.headers.link).last.page, 10);
     }
-    
+
     return {
         watchers: res.data,
         pageCount
