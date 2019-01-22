@@ -5,7 +5,7 @@ import StarWatchers from './components/StarWatchers/StarWatchers';
 
 import { getDateOfPastYears } from './utilities/utilities';
 
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
@@ -67,12 +67,14 @@ class App extends Component {
             value={this.dateSelectValue} />
         </div>
 
-        <Switch>
-          <Route path='/:owner/:repo/starwatchers' component={StarWatchers} />
-          <Route path='/' render={(props) => (
-            <Hits language={this.state.language} date={this.state.date} {...props} />
-          )} />
-        </Switch>
+        <BrowserRouter>
+          <Switch>
+            <Route path='/:owner/:repo/starwatchers' component={StarWatchers} />
+            <Route path='/' render={(props) => (
+              <Hits language={this.state.language} date={this.state.date} {...props} />
+            )} />
+          </Switch>
+        </BrowserRouter>
       </div>
     );
   }
