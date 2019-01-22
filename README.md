@@ -1,3 +1,23 @@
+# Github best repositories
+
+## Description
+
+A fully responsive application that provides information about some of the most popular repositories on github.
+Users can filter languages along with the creation date of repos.
+Navigation is handled by react router to provide a smooth experience through the various visited pages.
+Each respository has a stars link that makes possible to see every stargazers of that particular repo.
+
+## Tecnologies used
+
+1. create-react-app
+2. react-router-dom
+3. react-paginate
+4. parse-link-header
+5. css grid
+6. font awesome for react
+7. enzyme for testing
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
