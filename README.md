@@ -11,11 +11,12 @@ Each respository has a stars link that makes possible to see every stargazers of
 
 1. create-react-app
 2. react-router-dom
-3. react-paginate
-4. parse-link-header
-5. css grid
-6. font awesome for react
-7. enzyme for testing
+3. axios
+4. react-paginate
+5. parse-link-header
+6. css grid
+7. font awesome for react
+8. enzyme for testing
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
