@@ -90,7 +90,27 @@ class Hits extends React.Component {
     }
 
     render() {
-        const { hits } = this.state;
+        const hits = this.state.hits.map(hit => {
+            /*Remove dummy repo named eeeeee from the results*/
+            if (hit.name.includes('eeeeeee')) {
+                return null;
+            } else {
+                return (
+                    <Hit
+                        key={hit.id}
+                        owner={hit.owner.login}
+                        name={hit.name}
+                        url={hit.html_url}
+                        avatar={hit.owner.avatar_url}
+                        stars={hit.stargazers_count}
+                        language={hit.language}
+                        description={hit.description}
+                        creationDate={hit.created_at}
+                        updateDate={hit.updated_at}
+                        type={hit.owner.type} />
+                );
+            }
+        });
 
         if (!this.state.loading && this.state.percentage >= 100) {
             return (
@@ -100,27 +120,7 @@ class Hits extends React.Component {
                     location: this.props.location
                     }}>
                     <ul className='hits'>
-                        {hits.map(hit => {
-                            /*Remove dummy repo named eeeeee from the results*/
-                            if (hit.name.includes('eeeeeee')) {
-                                return null;
-                            } else {
-                                return (
-                                    <Hit
-                                        key={hit.id}
-                                        owner={hit.owner.login}
-                                        name={hit.name}
-                                        url={hit.html_url}
-                                        avatar={hit.owner.avatar_url}
-                                        stars={hit.stargazers_count}
-                                        language={hit.language}
-                                        description={hit.description}
-                                        creationDate={hit.created_at}
-                                        updateDate={hit.updated_at}
-                                        type={hit.owner.type} />
-                                );
-                            }
-                        })}
+                        {hits}
                     </ul>
                 </WithPaginate>
             )    
