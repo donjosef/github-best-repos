@@ -29,6 +29,12 @@ export async function getReposDynamically(query) {
     };
 }
 
+export async function getReadMe(owner, repo) {
+    const res = await axios.get(`https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`);
+    return res.data;
+}
+
+
 export async function getWatchers(owner, repo, page = 1) {
     const res = await axios.get(`https://api.github.com/repos/${owner}/${repo}/stargazers?per_page=40&page=${page}`);
 
