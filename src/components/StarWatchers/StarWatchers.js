@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import Watcher from './Watcher/Watcher';
 
-import Paginate from 'react-paginate';
-
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-
+import WithPaginate from '../../hoc/WithPaginate/WithPaginate';
 import './StarWatchers.css';
 import { getWatchers } from '../../api/api';
-
-library.add(faChevronLeft, faChevronRight);
 
 class StarWatchers extends Component {
     state = {
@@ -67,17 +59,6 @@ class StarWatchers extends Component {
         }
     }
 
-    changePageHandler = (data) => {
-        const page = data.selected + 1; //data.selected is 0 based
-        /* If last character is forw slash. Avoid a bad formatted url with two // */
-        if (this.props.match.url[this.props.match.url.length - 1] === '/') {
-            console.log(this.props.match.url)
-            this.props.history.push(this.props.match.url + page);
-        } else {
-            this.props.history.push(this.props.match.url + '/' + page); //will be root/owner/repo/starwatchers/1 or 4 or n
-        }
-    }
-
     render() {
         const watchers = this.state.watchers.map(watcher => {
             return <Watcher
@@ -87,29 +68,18 @@ class StarWatchers extends Component {
                 url={watcher.html_url} />
         });
 
-        let output = <div>
-            <ul className='watchers'>
-                {watchers}
-            </ul>
-
-            <Paginate
+        let output =
+            <WithPaginate
                 pageCount={this.state.pageCount}
-                pageRangeDisplayed={3}
-                marginPagesDisplayed={2}
-                onPageChange={this.changePageHandler}
-                disableInitialCallback
-                containerClassName='paginate-wrapper'
-                pageLinkClassName='paginate-link'
-                pageClassName='paginate-li'
-                previousClassName='paginate-li'
-                nextClassName='paginate-li'
-                previousLabel={<FontAwesomeIcon icon='chevron-left' />}
-                nextLabel={<FontAwesomeIcon icon='chevron-right' />}
-                activeClassName='active-link'
-            />
-        </div>
+                router={{
+                    history: this.props.history,
+                    match: this.props.match,
+                    location: this.props.location
+                }}>
+                <ul className='watchers'>{watchers}</ul>
+            </WithPaginate>
 
-        if(this.state.error) {
+        if (this.state.error) {
             output = <h1>{this.state.error}</h1>
         }
 
