@@ -3,6 +3,7 @@ import Search from './components/Search/Search';
 import Select from './components/Select/Select';
 import Hits from './components/Hits/Hits';
 import StarWatchers from './components/StarWatchers/StarWatchers';
+import ReadMePage from './components/ReadMePage/ReadMePage';
 
 import { getDateOfPastYears } from './utilities/utilities';
 
@@ -71,6 +72,7 @@ class App extends Component {
         </div>
 
         <Switch>
+          <Route path='/:owner/:repo/readme' component={ReadMePage}/>
           <Route path='/:owner/:repo/starwatchers' component={StarWatchers} />
           <Route path='/' render={(props) => (
             <Hits language={this.state.language} date={this.state.date} {...props} />
