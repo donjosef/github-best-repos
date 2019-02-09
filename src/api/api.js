@@ -21,6 +21,14 @@ export async function getRepos(language, date, page = 1) {
     }
 }
 
+export async function getReposDynamically(query) {
+    const res = await axios.get(`https://api.github.com/search/repositories?q=${query}+in:name+stars:>1000&per_page=10`);
+    
+    return {
+        results: res.data.items
+    };
+}
+
 export async function getWatchers(owner, repo, page = 1) {
     const res = await axios.get(`https://api.github.com/repos/${owner}/${repo}/stargazers?per_page=40&page=${page}`);
 
