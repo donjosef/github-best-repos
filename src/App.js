@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Search from './components/Search/Search';
 import Select from './components/Select/Select';
 import Hits from './components/Hits/Hits';
 import StarWatchers from './components/StarWatchers/StarWatchers';
@@ -45,11 +46,13 @@ class App extends Component {
     }
   }
 
+  
   render() {
     return (
       <div className="App">
         <header className='header'>
           <h1 className='header__title'>Most popular github repos</h1>
+          <Search />
         </header>
 
         <div className='controls-wrapper'>
