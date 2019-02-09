@@ -28,17 +28,17 @@ class Hits extends React.Component {
 
         this.setState({ loading: true, percentage: 0 });
 
-        const interval = setInterval(() => {
-            this.setState(prevState => ({
-                percentage: prevState.percentage + 10
-            }));
+        this.interval = setInterval(() => {
+          this.setState(prevState => ({
+              percentage: prevState.percentage + 10
+          }));
         }, 100);
 
         /* Get repos based on current path */
         if (pathname === '/' || pathname === '/page1') {
             getRepos(language, date)
                 .then(data => {
-                    clearInterval(interval);
+                    clearInterval(this.interval);
                     this.setState({
                         hits: data.hits,
                         pageCount: data.pageCount,
@@ -52,7 +52,7 @@ class Hits extends React.Component {
             const currentPage = pathname.match(regEx)[0];
             getRepos(language, date, currentPage)
                 .then(data => {
-                    clearInterval(interval)
+                  clearInterval(this.interval);
                     this.setState({
                         hits: data.hits,
                         pageCount: data.pageCount,
