@@ -49,6 +49,10 @@
   text-align: left;
 }
 
+.header__list-results a {
+  text-decoration: none;
+}
+
 .controls-wrapper {
   padding: 170px 20px 20px;
   text-align: left;
