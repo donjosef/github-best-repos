@@ -47,8 +47,29 @@ class App extends Component {
     }
   }
 
-  
+
   render() {
+    let controlsWrapper =
+      <div className='controls-wrapper'>
+        <Select
+          className='controls-wrapper__select'
+          label='Search'
+          optValues={['all', 'javascript', 'java', 'python', 'ruby']}
+          onSelect={this.changeLanguageHandler}
+          value={this.state.language} />
+        <Select
+          className='controls-wrapper__select'
+          label='for'
+          optValues={['all', 'last year', 'last 5 years']}
+          onSelect={this.changeDateHandler}
+          value={this.dateSelectValue} />
+      </div>;
+
+    const { pathname } = this.props.location;
+    if (pathname.endsWith('/readme') || pathname.endsWith('/starwatchers')) {
+      controlsWrapper = null;
+    }
+
     return (
       <div className="App">
         <header className='header'>
@@ -56,23 +77,10 @@ class App extends Component {
           <Search />
         </header>
 
-        <div className='controls-wrapper'>
-          <Select
-            className='controls-wrapper__select'
-            label='Search'
-            optValues={['all', 'javascript', 'java', 'python', 'ruby']}
-            onSelect={this.changeLanguageHandler}
-            value={this.state.language} />
-          <Select
-            className='controls-wrapper__select'
-            label='for'
-            optValues={['all', 'last year', 'last 5 years']}
-            onSelect={this.changeDateHandler}
-            value={this.dateSelectValue} />
-        </div>
-
+        {controlsWrapper}
+        
         <Switch>
-          <Route path='/:owner/:repo/readme' component={ReadMePage}/>
+          <Route path='/:owner/:repo/readme' component={ReadMePage} />
           <Route path='/:owner/:repo/starwatchers' component={StarWatchers} />
           <Route path='/' render={(props) => (
             <Hits language={this.state.language} date={this.state.date} {...props} />
