@@ -38,7 +38,7 @@ class Search extends Component {
             <div className="header__search">
                 <input
                     type="search"
-                    placeholder="Search your favorite repository"
+                    placeholder="Search readmes..."
                     value={this.state.query}
                     onChange={this.changeQuery}
                    />
