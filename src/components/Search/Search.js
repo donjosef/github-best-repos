@@ -23,6 +23,7 @@ class Search extends Component {
         if (prevState.query !== this.state.query && !this.state.query) {
             this.removeResults();
         }
+
     }
 
     removeResults = () => {
@@ -37,8 +38,8 @@ class Search extends Component {
                     placeholder="Search your favorite repository"
                     value={this.state.query}
                     onChange={this.changeQuery}
-                    onBlur={this.removeResults} />
-                <ListResults results={this.state.results} onLinkClick={this.removeResults} />
+                   />
+                <ListResults results={this.state.results} onClickLink={this.removeResults}/>
             </div>
         )
     }
