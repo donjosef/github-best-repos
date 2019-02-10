@@ -14,9 +14,9 @@ export const parseHtml = (string) =>{
 
 export const walkTheNode = (node, func) => {
     func(node);
-    node = node.firstChild;
+    node = node.firstElementChild;
     while (node) {
         walkTheNode(node, func);
-        node = node.nextSibling;
+        node = node.nextElementSibling;
     }
 };
