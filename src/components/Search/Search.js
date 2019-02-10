@@ -19,6 +19,10 @@ class Search extends Component {
             })
     }
 
+    handleLinkCLick = () => {
+        this.setState({ results: [] })
+    }
+
     render() {
         return (
             <div className="header__search">
@@ -27,7 +31,7 @@ class Search extends Component {
                     placeholder="Search your favorite repository"
                     value={this.state.query}
                     onChange={this.changeQuery} />
-                <ListResults results={this.state.results}/>
+                <ListResults results={this.state.results} onLinkClick={this.handleLinkCLick} />
             </div>
         )
     }
