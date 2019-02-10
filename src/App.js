@@ -65,15 +65,21 @@ class App extends Component {
           value={this.dateSelectValue} />
       </div>;
 
+    let homeLink = null;
     const { pathname } = this.props.location;
+
     if (pathname.endsWith('/readme') || pathname.endsWith('/starwatchers')) {
       controlsWrapper = null;
+    }
+
+    if (pathname.endsWith('/readme') || pathname.endsWith('/starwatchers')) {
+      homeLink = <Link className='header__home-link' to='/'>Home</Link>;
     }
 
     return (
       <div className="App">
         <header className='header'>
-          <Link className='header__home-link' to='/'>Home</Link>
+          {homeLink}
           <h1 className='header__title'>Most popular github repos</h1>
           <Search />
         </header>
