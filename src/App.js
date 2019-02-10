@@ -7,7 +7,7 @@ import ReadMePage from './components/ReadMePage/ReadMePage';
 
 import { getDateOfPastYears } from './utilities/utilities';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 
 import './App.css';
 
@@ -73,12 +73,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className='header'>
+          <Link className='header__home-link' to='/'>Home</Link>
           <h1 className='header__title'>Most popular github repos</h1>
           <Search />
         </header>
 
         {controlsWrapper}
-        
+
         <Switch>
           <Route path='/:owner/:repo/readme' component={ReadMePage} />
           <Route path='/:owner/:repo/starwatchers' component={StarWatchers} />
