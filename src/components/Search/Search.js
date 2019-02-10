@@ -12,7 +12,7 @@ class Search extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevState.query !== this.state.query) {
+        if(prevState.query !== this.state.query && this.state.query) {
             const { query } = this.state;
             getReposDynamically(query)
                 .then(data => {
