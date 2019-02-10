@@ -18,6 +18,17 @@ class ReadMePage extends Component {
             })
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.location.pathname !== this.props.location.pathname) {
+            const { owner, repo } = this.props.match.params;
+
+            getReadMe(owner, repo)
+                .then(markdown => {
+                    this.setState({ markdown })
+                })
+        }
+    }
+
     render() {
         /*
             * marked return a string representing the html
@@ -28,16 +39,16 @@ class ReadMePage extends Component {
         const htmlInString = marked(this.state.markdown);
         const parsed = parseHtml(htmlInString);
         walkTheNode(parsed, (node) => {
-            if(node.nodeType === 1) {
-                if(node.getAttribute('align')) {
+            if (node.nodeType === 1) {
+                if (node.getAttribute('align')) {
                     node.removeAttribute('align');
                 }
-                if(node.nodeName === 'IMG') {
+                if (node.nodeName === 'IMG') {
                     node.remove();
                 }
             }
         });
-        return <div className="readme-page" dangerouslySetInnerHTML={{__html: parsed.innerHTML}}></div>
+        return <div className="readme-page" dangerouslySetInnerHTML={{ __html: parsed.innerHTML }}></div>
     }
 }
 
