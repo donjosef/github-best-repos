@@ -12,17 +12,21 @@ class Search extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevState.query !== this.state.query && this.state.query) {
+        if (prevState.query !== this.state.query && this.state.query) {
             const { query } = this.state;
             getReposDynamically(query)
                 .then(data => {
                     this.setState({ results: data.results })
                 })
         }
+
+        if (prevState.query !== this.state.query && !this.state.query) {
+            this.removeResults();
+        }
     }
 
-    handleLinkCLick = () => {
-        this.setState({ results: [] })
+    removeResults = () => {
+        this.setState({ results: [] });
     }
 
     render() {
@@ -32,8 +36,9 @@ class Search extends Component {
                     type="search"
                     placeholder="Search your favorite repository"
                     value={this.state.query}
-                    onChange={this.changeQuery} />
-                <ListResults results={this.state.results} onLinkClick={this.handleLinkCLick} />
+                    onChange={this.changeQuery}
+                    onBlur={this.removeResults} />
+                <ListResults results={this.state.results} onLinkClick={this.removeResults} />
             </div>
         )
     }
