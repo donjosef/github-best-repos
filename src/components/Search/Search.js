@@ -12,11 +12,13 @@ class Search extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        const { query } = this.state;
-        getReposDynamically(query)
-            .then(data => {
-                this.setState({ results: data.results })
-            })
+        if(prevState.query !== this.state.query) {
+            const { query } = this.state;
+            getReposDynamically(query)
+                .then(data => {
+                    this.setState({ results: data.results })
+                })
+        }
     }
 
     handleLinkCLick = () => {
