@@ -27,7 +27,10 @@ class Search extends Component {
     }
 
     removeResults = () => {
-        this.setState({ results: [] });
+        this.setState({ 
+            results: [],
+            query: ""
+         });
     }
 
     render() {
