@@ -44,7 +44,7 @@ class ReadMePage extends Component {
                     node.removeAttribute('align');
                 }
                 if (node.nodeName === 'IMG') {
-                    node.remove();
+                    node.style.display = 'none'; //do not remove, otherwise recursion will not work
                 }
             }
         });
