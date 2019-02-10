@@ -68,11 +68,11 @@ class App extends Component {
     let homeLink = null;
     const { pathname } = this.props.location;
 
-    if (pathname.endsWith('/readme') || pathname.endsWith('/starwatchers')) {
+    if (pathname.includes('/readme') || pathname.includes('/starwatchers')) {
       controlsWrapper = null;
     }
 
-    if (pathname.endsWith('/readme') || pathname.endsWith('/starwatchers')) {
+    if (pathname.includes('/readme') || pathname.includes('/starwatchers')) {
       homeLink = <Link className='header__home-link' to='/'>Home</Link>;
     }
 
