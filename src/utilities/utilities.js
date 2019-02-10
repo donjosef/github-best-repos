@@ -5,3 +5,18 @@ export const getDateOfPastYears = (years) => {
     const isoDate = pastDate.toISOString().substr(0, 10); //github api requires iso formatted date
     return isoDate;
 };
+
+export const parseHtml = (string) =>{
+    const el = document.createElement('div');
+    el.innerHTML = string;
+    return el;
+};
+
+export const walkTheNode = (node, func) => {
+    func(node);
+    node = node.firstChild;
+    while (node) {
+        walkTheNode(node, func);
+        node = node.nextSibling;
+    }
+};
