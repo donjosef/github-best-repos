@@ -1,6 +1,10 @@
 .App {
   text-align: center;
   font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 150vh;
 }
 
 .header {
