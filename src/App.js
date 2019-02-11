@@ -93,7 +93,7 @@ class App extends Component {
             <Hits language={this.state.language} date={this.state.date} {...props} />
           )} />
         </Switch>
-        <footer>Made with love by <a href="https://github.com/donjosef">Giuseppe Montanaro</a></footer>
+        <footer className="footer">Made with love by <a href="https://github.com/donjosef">Giuseppe Montanaro</a></footer>
       </div>
     );
   }
