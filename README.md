@@ -3,9 +3,10 @@
 ## Description
 
 A fully responsive application that provides information about some of the most popular repositories on github.
-Users can filter languages along with the creation date of repos.
+Built entirely with React, users can filter languages along with the creation date of repos.
 Navigation is handled by react router to provide a smooth experience through the various visited pages.
 Each respository has a stars link that makes possible to see every stargazers of that particular repo.
+User can search readmes of one particular repository thanks to the searchbar that makes async requests to github API upon every keystrokes. 
 
 ## Tecnologies used
 
@@ -16,7 +17,8 @@ Each respository has a stars link that makes possible to see every stargazers of
 5. parse-link-header
 6. css grid
 7. font awesome for react
-8. enzyme for testing
+8. marked package for parsing markdown of retrieved readmes 
+9. enzyme for testing
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
