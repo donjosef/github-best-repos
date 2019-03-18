@@ -28,12 +28,9 @@ function displayWatchers(props) {
                 match: props.match,
                 location: props.location
             }}>
+            {props.error && <h1 style={{paddingTop: 170}}>{props.error}</h1>}
             <ul className='watchers'>{watchers}</ul>
         </WithPaginate>
-
-    if (props.error) {
-        output = <h1>{props.error}</h1>
-    }
 
     return output;
 }

@@ -13,7 +13,6 @@ this component is concerned with presentation only
 */
 function displayHits(props) {
     let hits;
-
     if (props.loading) {
         hits = Array(40).fill(null).map((_, index) => <FakeHit key={'hit' + index} />)
     } else {
@@ -48,6 +47,7 @@ function displayHits(props) {
                 match: props.match,
                 location: props.location
             }}>
+            {props.error && <h1>{props.error}</h1>}
             <ul className='hits'>
                 {hits}
             </ul>
