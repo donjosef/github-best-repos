@@ -1,8 +1,8 @@
 import React from 'react';
 import Hit from './Hit/Hit';
+import FakeHit from './FakeHit/FakeHit';
 import FetchData from '../../containers/FetchData/FetchData';
 import WithPaginate from '../../hoc/WithPaginate/WithPaginate';
-import LoadingBar from '../LoadingBar/LoadingBar';
 
 /*
 IMPORTANT: 
@@ -12,49 +12,47 @@ This function render jsx (specifically Hits component)
 this component is concerned with presentation only
 */
 function displayHits(props) {
-    const hits = props.data.map(hit => {
-        /*Remove dummy repo named eeeeee from the results*/
-        if (hit.name.includes('eeeeeee')) {
-            return null;
-        } else {
-            return (
-                <Hit
-                    key={hit.id}
-                    owner={hit.owner.login}
-                    name={hit.name}
-                    url={hit.html_url}
-                    avatar={hit.owner.avatar_url}
-                    stars={hit.stargazers_count}
-                    language={hit.language}
-                    description={hit.description}
-                    creationDate={hit.created_at}
-                    updateDate={hit.updated_at}
-                    type={hit.owner.type} />
-            );
-        }
-    });
+    let hits;
 
-    if (!props.loading) {
-        return (
-            <WithPaginate
-                pageCount={props.pageCount}
-                router={{
-                    history: props.history,
-                    match: props.match,
-                    location: props.location
-                }}>
-                <ul className='hits'>
-                    {hits}
-                </ul>
-            </WithPaginate>
-        )
+    if (props.loading) {
+        hits = Array(40).fill(null).map((_, index) => <FakeHit key={'hit' + index} />)
     } else {
-        if (!props.error) {
-            return <LoadingBar percentage={props.percentage} />
-        } else {
-            return <h1>{props.error}</h1>
-        }
+        hits = props.data.map(hit => {
+            /*Remove dummy repo named eeeeee from the results*/
+            if (hit.name.includes('eeeeeee')) {
+                return null;
+            } else {
+                return (
+                    <Hit
+                        key={hit.id}
+                        owner={hit.owner.login}
+                        name={hit.name}
+                        url={hit.html_url}
+                        avatar={hit.owner.avatar_url}
+                        stars={hit.stargazers_count}
+                        language={hit.language}
+                        description={hit.description}
+                        creationDate={hit.created_at}
+                        updateDate={hit.updated_at}
+                        type={hit.owner.type} />
+                );
+            }
+        });
     }
+
+    return (
+        <WithPaginate
+            pageCount={props.pageCount}
+            router={{
+                history: props.history,
+                match: props.match,
+                location: props.location
+            }}>
+            <ul className='hits'>
+                {hits}
+            </ul>
+        </WithPaginate>
+    )
 }
 
 function Hits(props) {
@@ -66,7 +64,7 @@ function Hits(props) {
             location={location}
             history={history}
             match={match}
-            searchParams={{language, date}}
+            searchParams={{ language, date }}
             render={displayHits}
         />
     )
