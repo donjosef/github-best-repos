@@ -39,20 +39,24 @@ function displayHits(props) {
         });
     }
 
-    return (
-        <WithPaginate
-            pageCount={props.pageCount}
-            router={{
-                history: props.history,
-                match: props.match,
-                location: props.location
-            }}>
-            {props.error && <h1>{props.error}</h1>}
-            <ul className='hits'>
-                {hits}
-            </ul>
-        </WithPaginate>
-    )
+    if (props.error) {
+        return <h1>{props.error}</h1>
+    } else {
+        return (
+            <WithPaginate
+                pageCount={props.pageCount}
+                router={{
+                    history: props.history,
+                    match: props.match,
+                    location: props.location
+                }}>
+                <ul className='hits'>
+                    {hits}
+                </ul>
+            </WithPaginate>
+        )
+    }
+    
 }
 
 function Hits(props) {

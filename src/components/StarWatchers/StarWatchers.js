@@ -20,19 +20,21 @@ function displayWatchers(props) {
             url={watcher.html_url} />
     });
 
-    let output =
-        <WithPaginate
-            pageCount={props.pageCount}
-            router={{
-                history: props.history,
-                match: props.match,
-                location: props.location
-            }}>
-            {props.error && <h1 style={{paddingTop: 170}}>{props.error}</h1>}
-            <ul className='watchers'>{watchers}</ul>
-        </WithPaginate>
-
-    return output;
+    if (props.error) {
+        return <h1 style={{ paddingTop: 170 }}>{props.error}</h1>
+    } else {
+        return (
+            <WithPaginate
+                pageCount={props.pageCount}
+                router={{
+                    history: props.history,
+                    match: props.match,
+                    location: props.location
+                }}>
+                <ul className='watchers'>{watchers}</ul>
+            </WithPaginate>
+        )
+    }
 }
 
 function StarWatchers(props) {
@@ -44,7 +46,7 @@ function StarWatchers(props) {
             location={location}
             history={history}
             match={match}
-            searchParams={{owner: match.params.owner, repo: match.params.repo}}
+            searchParams={{ owner: match.params.owner, repo: match.params.repo }}
             render={displayWatchers}
         />
     )
