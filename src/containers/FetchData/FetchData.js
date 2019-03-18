@@ -8,6 +8,7 @@ class FetchData extends Component {
 
     state = {
         data: [],
+        loading: true,
         pageCount: 0,
         error: null,
     }
@@ -25,7 +26,8 @@ class FetchData extends Component {
                 .then(res => {
                     this.setState({
                         data: res.data,
-                        pageCount: res.pageCount
+                        pageCount: res.pageCount,
+                        loading: false
                     })
                 })
                 .catch(err => this.setState({ error: err.message }))
@@ -37,7 +39,8 @@ class FetchData extends Component {
                 .then(res => {
                     this.setState({
                         data: res.data,
-                        pageCount: res.pageCount
+                        pageCount: res.pageCount,
+                        loading: false
                     });
                 })
                 .catch(err => this.setState({ error: err.message }))
@@ -59,11 +62,16 @@ class FetchData extends Component {
                 page = this.props.location.pathname.match(regEx)[0]; //extract the number of current page from pathname
             }
 
+            this.setState(prevState => ({
+                loading: !prevState.loading
+            }));
+
             getData(this.props.type, this.props.searchParams, page)
                 .then(res => {
                     this.setState({
                         data: res.data,
-                        pageCount: res.pageCount
+                        pageCount: res.pageCount,
+                        loading: false
                     })
                 })
                 .catch(err => this.setState({ error: err.message }))
