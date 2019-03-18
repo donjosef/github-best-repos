@@ -30,7 +30,7 @@ class FetchData extends Component {
                         loading: false
                     })
                 })
-                .catch(err => this.setState({ error: err.message }))
+                .catch(err => this.setState({ error: err.message, loading: false }))
         } else {
             /*Otherwise getData will be invoked with the currentPage extracted from route parameters*/
             const regEx = /\d+/;
@@ -43,7 +43,7 @@ class FetchData extends Component {
                         loading: false
                     });
                 })
-                .catch(err => this.setState({ error: err.message }))
+                .catch(err => this.setState({ error: err.message, loading: false }))
         }
     }
 
