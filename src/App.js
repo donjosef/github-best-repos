@@ -62,7 +62,7 @@ class App extends Component {
           label='for'
           optValues={['all', 'last year', 'last 5 years']}
           onSelect={this.changeDateHandler}
-          value={this.dateSelectValue} />
+          value={this.state.dateSelectValue} />
       </div>;
 
     let homeLink = null;
