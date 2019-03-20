@@ -26,6 +26,12 @@ class WithPaginate extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if(prevProps.router.location.pathname !== this.props.router.location.pathname) {
+            window.scrollTo({top: 0});
+        }
+    }
+
     render() {
         const pathname = this.props.router.location.pathname;
             const regex = /\d+/;
